@@ -102,11 +102,11 @@ def main(page: ft.Page):
     )
 
     cost_card, cost_value = create_summary_card(
-        "TOTAL PURCHASE COST", "$0.00"
+        "TOTAL PURCHASE COST", "Rs. 0.00"
     )
 
     remaining_card, remaining_value = create_summary_card(
-        "REMAINING BUDGET", "$0.00"
+        "REMAINING BUDGET", "Rs. 0.00"
     )
 
     remaining_shares_card, remaining_shares_value = create_summary_card(
@@ -150,7 +150,7 @@ def main(page: ft.Page):
 
     def create_purchase_row(index, price, quantity):
         price_input = ft.TextField(
-            value=str(price),
+            value=None,
             keyboard_type=ft.KeyboardType.NUMBER,
             text_align=ft.TextAlign.RIGHT,
             dense=True,
@@ -243,7 +243,7 @@ def main(page: ft.Page):
                 ),
 
                 ft.Text(
-                    "Calculate your share purchases and remaining budget.",
+                    "By MZ for ZR",
                     color="#303B50",
                     size=14,
                 ),
@@ -301,13 +301,6 @@ def main(page: ft.Page):
                                 size=20,
                                 weight=ft.FontWeight.BOLD,
                                 color="#172033",
-                            ),
-
-                            ft.Text(
-                                "Edit the price and quantity of each "
-                                "purchase. Costs update automatically.",
-                                color="#303B50",
-                                size=13,
                             ),
 
                             ft.Row(
@@ -368,12 +361,6 @@ def main(page: ft.Page):
                     padding=20,
                     border_radius=12,
                     border=ft.Border.all(1, "#D5DCE8"),
-                ),
-
-                ft.Text(
-                    "All calculations use the values entered above.",
-                    size=12,
-                    color="#303B50",
                 ),
             ],
             spacing=18,
