@@ -122,7 +122,7 @@ def main(page: ft.Page):
 
     # Purchase list
 
-    purchase_list = ft.Column(spacing=10)
+    purchase_list = ft.Column(spacing=7)
 
     def recalculate(e=None):
         budget = parse_number(dividend_input.value)
@@ -163,14 +163,15 @@ def main(page: ft.Page):
             value=str(price),
             keyboard_type=ft.KeyboardType.NUMBER,
             text_align=ft.TextAlign.RIGHT,
-            text_size=14,
+            text_size=12,
             label_style=ft.TextStyle(color="#303B50", size=11),
-            content_padding=10,
+            content_padding=7,
             color="#172033",
             border_color="#9AA7BC",
             focused_border_color="#2448A8",
             on_change=recalculate,
             expand=True,
+            height=30
         )
 
         quantity_input = ft.TextField(
@@ -178,7 +179,7 @@ def main(page: ft.Page):
             value=str(quantity),
             keyboard_type=ft.KeyboardType.NUMBER,
             text_align=ft.TextAlign.RIGHT,
-            text_size=14,
+            text_size=12,
             label_style=ft.TextStyle(color="#303B50", size=11),
             content_padding=10,
             color="#172033",
@@ -186,11 +187,12 @@ def main(page: ft.Page):
             focused_border_color="#2448A8",
             on_change=recalculate,
             expand=True,
+            height=30
         )
 
         cost_text = ft.Text(
             "Rs. 0.00",
-            size=15,
+            size=12,
             weight=ft.FontWeight.BOLD,
             color="#172033",
         )
@@ -210,7 +212,7 @@ def main(page: ft.Page):
                         [
                             ft.Text(
                                 f"Purchase {index}",
-                                size=15,
+                                size=12,
                                 weight=ft.FontWeight.BOLD,
                                 color="#172033",
                             ),
@@ -229,7 +231,7 @@ def main(page: ft.Page):
                 spacing=8,
             ),
             bgcolor="#FFFFFF",
-            padding=12,
+            padding=10,
             border_radius=10,
             border=ft.Border.all(1, "#D5DCE8"),
         )
