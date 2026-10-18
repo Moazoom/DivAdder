@@ -4,7 +4,7 @@ PURCHASES = [(0, 0) for _ in range(10)]
 
 
 def main(page: ft.Page):
-    page.title = "Dividend Share Calculator"
+    page.title = "Dividend Repurchase"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 12
     page.scroll = ft.ScrollMode.AUTO
@@ -37,10 +37,10 @@ def main(page: ft.Page):
             return 0.0
 
     def money(value):
-        return f"Rs. {value:,.2f}"
+        return f"{value:,.0f}"
 
     def number(value):
-        return f"{value:,.2f}"
+        return f"{value:,.0f}"
 
     # Calculator inputs
 
@@ -54,6 +54,7 @@ def main(page: ft.Page):
         border_color="#9AA7BC",
         focused_border_color="#2448A8",
         content_padding=10,
+        height=30
     )
 
     share_price_input = ft.TextField(
@@ -66,6 +67,7 @@ def main(page: ft.Page):
         border_color="#9AA7BC",
         focused_border_color="#2448A8",
         content_padding=10,
+        height=30
     )
 
     purchase_fields = []
@@ -96,7 +98,7 @@ def main(page: ft.Page):
                 tight=True,
             ),
             bgcolor="#FFFFFF",
-            padding=10,
+            padding=5,
             border_radius=10,
             border=ft.Border.all(1, "#D5DCE8"),
             expand=True,
@@ -105,19 +107,19 @@ def main(page: ft.Page):
         return card, value_text
 
     shares_card, shares_value = create_summary_card(
-        "SHARES AFFORDABLE", "0"
+        "Can Be Buy", "-"
     )
 
     cost_card, cost_value = create_summary_card(
-        "TOTAL COST", "Rs. 0.00"
+        "Total Cost", "Rs. 0"
     )
 
     remaining_card, remaining_value = create_summary_card(
-        "REMAINING BUDGET", "Rs. 0.00"
+        "Remaining Rs.", "Rs. 0"
     )
 
     remaining_shares_card, remaining_shares_value = (
-        create_summary_card("REMAINING SHARES", "0")
+        create_summary_card("Buy More", "0")
     )
 
     # Purchase list
@@ -128,7 +130,7 @@ def main(page: ft.Page):
         budget = parse_number(dividend_input.value)
         current_price = parse_number(share_price_input.value)
 
-        total_cost = 0.0
+        total_cost = 0
 
         for item in purchase_fields:
             price = parse_number(item["price"].value)
@@ -143,16 +145,16 @@ def main(page: ft.Page):
         shares_value.value = (
             number(budget / current_price)
             if current_price > 0
-            else "0.00"
+            else "0"
         )
 
-        cost_value.value = money(total_cost)
+        cost_value.value = total_cost
         remaining_value.value = money(remaining_budget)
 
         remaining_shares_value.value = (
             number(remaining_budget / current_price)
             if current_price > 0
-            else "0.00"
+            else "0"
         )
 
         page.update()
@@ -191,8 +193,8 @@ def main(page: ft.Page):
         )
 
         cost_text = ft.Text(
-            "Rs. 0.00",
-            size=12,
+            "0",
+            size=16,
             weight=ft.FontWeight.BOLD,
             color="#172033",
         )
@@ -206,30 +208,12 @@ def main(page: ft.Page):
         )
 
         return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Row(
-                        [
-                            ft.Text(
-                                f"Purchase {index}",
-                                size=12,
-                                weight=ft.FontWeight.BOLD,
-                                color="#172033",
-                            ),
-                            ft.Container(expand=True),
-                            ft.Text("Cost:", size=12, color="#303B50"),
-                            cost_text,
-                        ],
-                        spacing=8,
-                    ),
-                    ft.Row(
-                        [price_input, quantity_input],
-                        spacing=8,
-                        vertical_alignment=ft.CrossAxisAlignment.START,
-                    ),
-                ],
-                spacing=8,
-            ),
+                ft.Row(
+                    [ft.Text(f"{index}", size=16, weight=ft.FontWeight.BOLD, color="#172033"), price_input, quantity_input, cost_text],
+                    spacing=8,
+                    vertical_alignment=ft.CrossAxisAlignment.START,
+                ),
+
             bgcolor="#FFFFFF",
             padding=10,
             border_radius=10,
@@ -260,8 +244,8 @@ def main(page: ft.Page):
         ft.Column(
             [
                 ft.Text(
-                    "Dividend Share Calculator",
-                    size=25,
+                    "Dividend Repurchase",
+                    size=18,
                     weight=ft.FontWeight.BOLD,
                     color="#172033",
                 ),
@@ -289,17 +273,20 @@ def main(page: ft.Page):
                         ft.Container(
                             content=shares_card,
                             col={"xs": 4, "md": 4},
+                            height=60
                         ),
                         ft.Container(
                             content=remaining_card,
                             col={"xs": 4, "md": 4},
+                            height=60
                         ),
                         ft.Container(
                             content=remaining_shares_card,
                             col={"xs": 4, "md": 4},
+                            height=60
                         ),
                     ],
-                    spacing=6,
+                    spacing=4,
                     run_spacing=6,
                 ),
 
@@ -307,12 +294,30 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column(
                         [
-                            ft.Text(
-                                "Purchase Breakdown",
-                                size=20,
+                            ft.Row([
+                                ft.Container(width=40),
+                                ft.Text(
+                                "Price",
+                                size=16,
                                 weight=ft.FontWeight.BOLD,
                                 color="#172033",
-                            ),
+                                expand=2
+                                ),
+                               ft.Text(
+                                "Own",
+                                size=16,
+                                weight=ft.FontWeight.BOLD,
+                                color="#172033",
+                                expand=1
+                                ),
+                               ft.Text(
+                                "Cost (Rs.)",
+                                size=16,
+                                weight=ft.FontWeight.BOLD,
+                                color="#172033",
+                                expand=2
+                                )
+                            ], expand=True),
                             purchase_list,
                             ft.Row(
                                 [
@@ -321,6 +326,7 @@ def main(page: ft.Page):
                                         icon=ft.Icons.RESTART_ALT,
                                         on_click=reset_values,
                                     ),
+                                    cost_card
                                 ],
                                 alignment=ft.MainAxisAlignment.END,
                             ),
@@ -331,9 +337,6 @@ def main(page: ft.Page):
                     padding=0,
                     border_radius=10,
                 ),
-
-                # Total cost at the bottom
-                cost_card,
             ],
             spacing=14,
             expand=True,
