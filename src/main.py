@@ -81,6 +81,8 @@ def main(page: ft.Page):
             weight=ft.FontWeight.BOLD,
             color="#172033",
             selectable=True,
+            text_align=ft.TextAlign.RIGHT,
+            expand=True
         )
 
         card = ft.Container(
@@ -96,6 +98,7 @@ def main(page: ft.Page):
                 ],
                 spacing=6,
                 tight=True,
+                horizontal_alignment=ft.CrossAxisAlignment.END
             ),
             bgcolor="#FFFFFF",
             padding=5,
@@ -294,30 +297,7 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column(
                         [
-                            ft.Row([
-                                ft.Container(width=40),
-                                ft.Text(
-                                "Price",
-                                size=16,
-                                weight=ft.FontWeight.BOLD,
-                                color="#172033",
-                                expand=2
-                                ),
-                               ft.Text(
-                                "Own",
-                                size=16,
-                                weight=ft.FontWeight.BOLD,
-                                color="#172033",
-                                expand=1
-                                ),
-                               ft.Text(
-                                "Cost (Rs.)",
-                                size=16,
-                                weight=ft.FontWeight.BOLD,
-                                color="#172033",
-                                expand=2
-                                )
-                            ], expand=True),
+
                             purchase_list,
                             ft.Row(
                                 [
