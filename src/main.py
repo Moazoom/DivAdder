@@ -54,6 +54,7 @@ def main(page: ft.Page):
         border_color="#9AA7BC",
         focused_border_color="#2448A8",
         content_padding=10,
+        text_align=ft.TextAlign.RIGHT,
         height=30
     )
 
@@ -67,6 +68,7 @@ def main(page: ft.Page):
         border_color="#9AA7BC",
         focused_border_color="#2448A8",
         content_padding=10,
+        text_align=ft.TextAlign.RIGHT,
         height=30
     )
 
@@ -176,7 +178,7 @@ def main(page: ft.Page):
             focused_border_color="#2448A8",
             on_change=recalculate,
             expand=True,
-            height=30
+            height=26
         )
 
         quantity_input = ft.TextField(
@@ -192,7 +194,7 @@ def main(page: ft.Page):
             focused_border_color="#2448A8",
             on_change=recalculate,
             expand=True,
-            height=30
+            height=26
         )
 
         cost_text = ft.Text(
@@ -200,6 +202,8 @@ def main(page: ft.Page):
             size=16,
             weight=ft.FontWeight.BOLD,
             color="#172033",
+            width=70,
+            text_align=ft.TextAlign.END
         )
 
         purchase_fields.append(
@@ -212,7 +216,7 @@ def main(page: ft.Page):
 
         return ft.Container(
                 ft.Row(
-                    [ft.Text(f"{index}", size=16, weight=ft.FontWeight.BOLD, color="#172033"), price_input, quantity_input, cost_text],
+                    [ft.Text(f"{index}", size=16, weight=ft.FontWeight.BOLD, color="#172033"), quantity_input, price_input, cost_text],
                     spacing=8,
                     vertical_alignment=ft.CrossAxisAlignment.START,
                 ),
