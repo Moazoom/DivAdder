@@ -4,7 +4,7 @@ PURCHASES = [(0, 0) for _ in range(10)]
 
 
 def main(page: ft.Page):
-    page.title = "Dividend Repurchase"
+    page.title = "My Purchases"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 12
     page.scroll = ft.ScrollMode.AUTO
@@ -45,22 +45,20 @@ def main(page: ft.Page):
     # Calculator inputs
 
     dividend_input = ft.TextField(
-        label="Dividend (Rs.)",
-        value="0",
+        label="My Cash",
         keyboard_type=ft.KeyboardType.NUMBER,
         color="#172033",
         label_style=ft.TextStyle(color="#303B50", size=12),
-        text_size=14,
+        text_size=16,
         border_color="#9AA7BC",
         focused_border_color="#2448A8",
         content_padding=10,
         text_align=ft.TextAlign.RIGHT,
-        height=30
     )
 
     share_price_input = ft.TextField(
         label="Share price (Rs.)",
-        value="0",
+        value="",
         keyboard_type=ft.KeyboardType.NUMBER,
         color="#172033",
         label_style=ft.TextStyle(color="#303B50", size=12),
@@ -107,6 +105,7 @@ def main(page: ft.Page):
             border_radius=10,
             border=ft.Border.all(1, "#D5DCE8"),
             expand=True,
+            height=60
         )
 
         return card, value_text
@@ -116,7 +115,7 @@ def main(page: ft.Page):
     )
 
     cost_card, cost_value = create_summary_card(
-        "Total Cost", "Rs. 0"
+        "Total Price", "Rs. 0"
     )
 
     remaining_card, remaining_value = create_summary_card(
@@ -150,7 +149,7 @@ def main(page: ft.Page):
         shares_value.value = (
             number(budget / current_price)
             if current_price > 0
-            else "0"
+            else ""
         )
 
         cost_value.value = total_cost
@@ -159,7 +158,7 @@ def main(page: ft.Page):
         remaining_shares_value.value = (
             number(remaining_budget / current_price)
             if current_price > 0
-            else "0"
+            else ""
         )
 
         page.update()
@@ -167,7 +166,7 @@ def main(page: ft.Page):
     def create_purchase_row(index, price, quantity):
         price_input = ft.TextField(
             label="Price (Rs.)",
-            value=str(price),
+            value= "" if (price==0) else str(price),
             keyboard_type=ft.KeyboardType.NUMBER,
             text_align=ft.TextAlign.RIGHT,
             text_size=12,
@@ -183,7 +182,7 @@ def main(page: ft.Page):
 
         quantity_input = ft.TextField(
             label="Quantity",
-            value=str(quantity),
+            value= "" if (quantity==0) else str(quantity),
             keyboard_type=ft.KeyboardType.NUMBER,
             text_align=ft.TextAlign.RIGHT,
             text_size=12,
@@ -228,12 +227,12 @@ def main(page: ft.Page):
         )
 
     def reset_values(e=None):
-        dividend_input.value = "0"
-        share_price_input.value = "0"
+        dividend_input.value = ""
+        share_price_input.value = ""
 
         for item in purchase_fields:
-            item["price"].value = "0"
-            item["quantity"].value = "0"
+            item["price"].value = ""
+            item["quantity"].value = ""
 
         recalculate()
 
@@ -250,8 +249,9 @@ def main(page: ft.Page):
     page.add(
         ft.Column(
             [
+                ft.Container(height=15),
                 ft.Text(
-                    "Dividend Repurchase",
+                    "My Purchases",
                     size=18,
                     weight=ft.FontWeight.BOLD,
                     color="#172033",
@@ -265,7 +265,7 @@ def main(page: ft.Page):
                             col={"xs": 6, "md": 6},
                         ),
                         ft.Container(
-                            content=share_price_input,
+                            content=remaining_card,
                             col={"xs": 6, "md": 6},
                         ),
                     ],
@@ -273,29 +273,6 @@ def main(page: ft.Page):
                     run_spacing=8,
                 ),
 
-                # Top results row
-                # Shares Affordable | Remaining Budget | Remaining Shares
-                ft.ResponsiveRow(
-                    [
-                        ft.Container(
-                            content=shares_card,
-                            col={"xs": 4, "md": 4},
-                            height=60
-                        ),
-                        ft.Container(
-                            content=remaining_card,
-                            col={"xs": 4, "md": 4},
-                            height=60
-                        ),
-                        ft.Container(
-                            content=remaining_shares_card,
-                            col={"xs": 4, "md": 4},
-                            height=60
-                        ),
-                    ],
-                    spacing=4,
-                    run_spacing=6,
-                ),
 
                 # Purchase breakdown
                 ft.Container(
